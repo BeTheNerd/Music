@@ -1,25 +1,64 @@
-import logo from './logo.svg';
+import { Component } from 'react';
+import Song from './Song';
+import Songs from "./Songs";
+import SongForm from "./SongForm";
 import './App.css';
 
-function App() {
+class App extends Component {
+  state = {
+    songs: [
+      { id: 1, artist: "Marina", song: "Oh no!"},
+      { id: 1, artist: "Avril Lavigne", song: "Complicated"},
+      { id: 1, artist: "Fall Out boy", song: "Irresistible"},
+    ],
+  };
+  async componentDidCatch() {
+    console.log("mounted");
+  }
+};
+// add update
+componentDidUpdate(); {
+  console.log("update");
+}
+
+addSong = (song) => {
+  console.log("song");
+  this.setState({
+    songs:[song, ...this.state.songs],
+  });
+};
+
+updateSong = (song) => {
+  let updateSongs = this.state.songs.map((s) =>
+    s.id === song.id ? song : s
+  );
+
+  this.setState({
+    songs: updateSongs,
+  });
+};
+
+deleteSongs = (id) => {
+  let filteredSongs = this.state.songs.filter((s) => s.id !== id);
+  this.setState({
+    songs: filteredSongs,
+  });
+};
+
+render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+        <div>
+        <Song/> 
+        addSong={this.addSong},
+        updateSong={this.updateSong},
+        deleteSong={this.deleteSong},
+        songs={this.state.songs}
+        </div>
   );
 }
+};
+
+
 
 export default App;
